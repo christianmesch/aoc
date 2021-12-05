@@ -6,7 +6,7 @@ let boards = tail.map((v) => v.trim().replace(/\s+/g, ',').split(',').map((v) =>
 
 const whichHasBingo = (bs) => {
   for (let bi = 0; bi < bs.length; bi++) {
-    if (boardHasBingo(bs[bi])) return bi;
+    if (hasBingo(bs[bi])) return bi;
   }
 
   return -1;
