@@ -35,12 +35,7 @@ const solve = (input) => {
     .flatMap((v) => mapPoints(v))
     .reduce(reduceOverlapping, new Map());
 
-    let count = 0;
-    for (const [_, v] of freq) {
-      if (v > 1) count++;
-    }
-
-    return count;
+  return [...freq].filter(([_, a]) => a > 1).length;
 };
 
 if (!args[3] || args[3] === '1') {
