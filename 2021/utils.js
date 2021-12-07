@@ -35,7 +35,7 @@ const median = (numbers) => {
 const mean = (numbers) => {
   if (numbers.length === 0) return 0;
 
-  return Math.round(numbers.reduce((acc, curr) => acc + curr, 0) / numbers.length);
+  return numbers.reduce((acc, curr) => acc + curr, 0) / numbers.length;
 }
 
 module.exports = {
