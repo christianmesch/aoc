@@ -38,6 +38,36 @@ const mean = (numbers) => {
   return numbers.reduce((acc, curr) => acc + curr, 0) / numbers.length;
 }
 
+const set = {
+  superset: (a, b) => {
+    for (const e of b) {
+      if (!a.has(e)) return false;
+    }
+
+    return true;
+  },
+  union: (a, b) => {
+    const u = new Set(a);
+    for (const e of b) {
+      u.add(e);
+    }
+
+    return u;
+  },
+  diff: (a, b) => {
+    const d = new Set(a);
+    for (const e of b) {
+      d.delete(e);
+    }
+
+    return d;
+  },
+  eq: (a, b) => {
+    if (a.size !== b.size) return false;
+    return [...a].every((v) => b.has(v));
+  }
+};
+
 module.exports = {
   read,
   readInt,
@@ -45,4 +75,5 @@ module.exports = {
   compareTo,
   median,
   mean,
+  set,
 };
