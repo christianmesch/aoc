@@ -9,9 +9,9 @@ const readInt = (inputFileName, sep = '\n', leaveEmpty = false) => {
     return read(inputFileName, sep, leaveEmpty).map(Number);
 };
 
-const range = (start, end) => {
-    return new Array(end - start).fill().map((_, i) => i + start);
-};
+const range = (start, end, delta = 1) => {
+    return new Array(Math.ceil((end - start) / delta)).fill().map((_, i) => start + i * delta);
+}
 
 const lists = {
     alpha: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
