@@ -1,12 +1,12 @@
-const read = (inputFileName, sep = '\n') => {
+const read = (inputFileName, sep = '\n', leaveEmpty = false) => {
     return require('fs')
         .readFileSync(inputFileName, 'utf-8')
         .split(sep)
-        .filter((x) => x.length !== 0);
+        .filter((x) => leaveEmpty || x.length !== 0);
 };
 
-const readInt = (inputFileName, sep = '\n') => {
-    return read(inputFileName, sep).map(Number);
+const readInt = (inputFileName, sep = '\n', leaveEmpty = false) => {
+    return read(inputFileName, sep, leaveEmpty).map(Number);
 };
 
 const range = (start, end) => {

@@ -1,13 +1,14 @@
 const args = process.argv;
+const utils = require('./utils');
 
-const input = require('./utils')
-    .readInt(args[2]);
+const input = utils
+    .read(args[2]);
 
-const part1 = (input) => {
+const part1 = () => {
 
 };
 
-const part2 = (input) => {
+const part2 = () => {
 
 };
 
