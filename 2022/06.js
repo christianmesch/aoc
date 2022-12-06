@@ -6,10 +6,7 @@ const input = utils
 
 const solve = (num) => {
     for (let i = num; i <= input.length; i++) {
-        if (input.slice(i - num, i)
-            .every((val, idx, arr) => arr.filter((val2) => val === val2).length === 1)) {
-            return i;
-        }
+        if (new Set(input.slice(i - num, i)).size === num) return i;
     }
 }
 
