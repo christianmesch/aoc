@@ -81,25 +81,33 @@ const set = {
     }
 };
 
-const adjacent = (input, x, y, includeDiagonal = false) => {
-    const list = [];
-    if (x !== 0) list.push({x: x - 1, y, d: input[y][x - 1]});
-    if (x !== input[0].length - 1) list.push({x: x + 1, y, d: input[y][x + 1]});
-    if (y !== 0) list.push({x, y: y - 1, d: input[y - 1][x]});
-    if (y !== input.length - 1) list.push({x, y: y + 1, d: input[y + 1][x]});
+const grid = {
+    adjacent: (input, x, y, includeDiagonal = false) => {
+        const list = [];
+        if (x !== 0) list.push({x: x - 1, y, d: input[y][x - 1]});
+        if (x !== input[0].length - 1) list.push({x: x + 1, y, d: input[y][x + 1]});
+        if (y !== 0) list.push({x, y: y - 1, d: input[y - 1][x]});
+        if (y !== input.length - 1) list.push({x, y: y + 1, d: input[y + 1][x]});
 
-    if (includeDiagonal) {
-        if (x !== 0 && y !== 0) list.push({x: x - 1, y: y - 1, d: input[y - 1][x - 1]});
-        if (x !== input.length - 1 && y !== input[0].length - 1) list.push({
-            x: x + 1,
-            y: y + 1,
-            d: input[y + 1][x + 1]
-        });
-        if (x !== 0 && y !== input[0].length - 1) list.push({x: x - 1, y: y + 1, d: input[y + 1][x - 1]});
-        if (x !== input.length - 1 && y !== 0) list.push({x: x + 1, y: y - 1, d: input[y - 1][x + 1]});
+        if (includeDiagonal) {
+            if (x !== 0 && y !== 0) list.push({x: x - 1, y: y - 1, d: input[y - 1][x - 1]});
+            if (x !== input.length - 1 && y !== input[0].length - 1) list.push({
+                x: x + 1,
+                y: y + 1,
+                d: input[y + 1][x + 1]
+            });
+            if (x !== 0 && y !== input[0].length - 1) list.push({x: x - 1, y: y + 1, d: input[y + 1][x - 1]});
+            if (x !== input.length - 1 && y !== 0) list.push({x: x + 1, y: y - 1, d: input[y - 1][x + 1]});
+        }
+
+        return list;
+    },
+    column: (input, col) => {
+        return input.map((row) => row[col]);
+    },
+    allColumns: (input) => {
+        return range(0, input.length).map((c) => grid.column(input, c));
     }
-
-    return list;
 }
 
 module.exports = {
@@ -111,5 +119,5 @@ module.exports = {
     median,
     mean,
     set,
-    adjacent,
+    grid,
 };
