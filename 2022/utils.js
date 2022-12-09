@@ -108,7 +108,31 @@ const grid = {
     allColumns: (input) => {
         return range(0, input.length).map((c) => grid.column(input, c));
     }
-}
+};
+
+const coord = {
+    directionToDelta: (direction, num = 1) => {
+        switch (direction) {
+            case 'R':
+                return {x: num, y: 0};
+            case 'L':
+                return {x: -num, y: 0};
+            case 'U':
+                return {x: 0, y: num};
+            case 'D':
+                return {x: 0, y: -num};
+        }
+    },
+    add: (coordinate, delta) => {
+        coordinate.x += delta.x;
+        coordinate.y += delta.y;
+    },
+    sub: (coordinate, delta) => {
+        coordinate.x -= delta.x;
+        coordinate.y -= delta.y;
+    }
+};
+
 
 module.exports = {
     read,
@@ -120,4 +144,5 @@ module.exports = {
     mean,
     set,
     grid,
+    coord
 };
