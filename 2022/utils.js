@@ -82,22 +82,18 @@ const set = {
 };
 
 const grid = {
-    adjacent: (input, x, y, includeDiagonal = false) => {
+    adjacent: (input, coord, includeDiagonal = false) => {
         const list = [];
-        if (x !== 0) list.push({x: x - 1, y, d: input[y][x - 1]});
-        if (x !== input[0].length - 1) list.push({x: x + 1, y, d: input[y][x + 1]});
-        if (y !== 0) list.push({x, y: y - 1, d: input[y - 1][x]});
-        if (y !== input.length - 1) list.push({x, y: y + 1, d: input[y + 1][x]});
+        if (coord.x !== 0) list.push(input[coord.y][coord.x - 1]);
+        if (coord.x !== input[0].length - 1) list.push(input[coord.y][coord.x + 1]);
+        if (coord.y !== 0) list.push(input[coord.y - 1][coord.x]);
+        if (coord.y !== input.length - 1) list.push(input[coord.y + 1][coord.x]);
 
         if (includeDiagonal) {
-            if (x !== 0 && y !== 0) list.push({x: x - 1, y: y - 1, d: input[y - 1][x - 1]});
-            if (x !== input.length - 1 && y !== input[0].length - 1) list.push({
-                x: x + 1,
-                y: y + 1,
-                d: input[y + 1][x + 1]
-            });
-            if (x !== 0 && y !== input[0].length - 1) list.push({x: x - 1, y: y + 1, d: input[y + 1][x - 1]});
-            if (x !== input.length - 1 && y !== 0) list.push({x: x + 1, y: y - 1, d: input[y - 1][x + 1]});
+            if (coord.x !== 0 && coord.y !== 0) list.push(input[coord.y - 1][coord.x - 1]);
+            if (coord.x !== input.length - 1 && coord.y !== input[0].length - 1) list.push(input[coord.y + 1][coord.x + 1]);
+            if (coord.x !== 0 && coord.y !== input[0].length - 1) list.push(input[coord.y + 1][coord.x - 1]);
+            if (coord.x !== input.length - 1 && coord.y !== 0) list.push(input[coord.y - 1][coord.x + 1]);
         }
 
         return list;
@@ -130,9 +126,10 @@ const coord = {
     sub: (coordinate, delta) => {
         coordinate.x -= delta.x;
         coordinate.y -= delta.y;
-    }
+    },
+    toString: (coordinate) => `${coordinate.x},${coordinate.y}`,
+    eq: (a, b) => a.x === b.x && a.y === b.y
 };
-
 
 module.exports = {
     read,
@@ -144,5 +141,5 @@ module.exports = {
     mean,
     set,
     grid,
-    coord
+    coord,
 };
