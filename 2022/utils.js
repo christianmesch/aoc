@@ -98,6 +98,32 @@ const grid = {
 
         return list;
     },
+    bfs: (graph, start, filterNeighbors = (v, c) => true) => {
+        const queue = [];
+        const visited = new Set([coord.toString(start.coord)]);
+
+        graph.flat().forEach((v) => {
+            v.distance = Number.POSITIVE_INFINITY;
+        });
+
+        start.distance = 0;
+        queue.push(start);
+
+        while (queue.length) {
+            const curr = queue.shift();
+
+            grid.adjacent(graph, curr.coord)
+                .filter((v) => !visited.has(coord.toString(v.coord)))
+                .filter((v) => filterNeighbors(v, curr))
+                .forEach((v) => {
+                    const tmp = curr.distance + 1;
+                    if (tmp < v.distance) {
+                        v.distance = tmp;
+                        queue.push(v);
+                    }
+                });
+        }
+    },
     column: (input, col) => {
         return input.map((row) => row[col]);
     },
