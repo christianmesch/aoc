@@ -148,13 +148,54 @@ const coord = {
     add: (coordinate, delta) => {
         coordinate.x += delta.x;
         coordinate.y += delta.y;
+
+        return coordinate;
     },
     sub: (coordinate, delta) => {
         coordinate.x -= delta.x;
         coordinate.y -= delta.y;
+
+        return coordinate;
+    },
+    expand: (from, to, inclusive = true) => {
+        const list = [];
+        const xStart = Math.min(from.x, to.x);
+        const xEnd = Math.max(from.x, to.x);
+        const yStart = Math.min(from.y, to.y);
+        const yEnd = Math.max(from.y, to.y);
+
+        for (let x = xStart; x <= xEnd; x++) {
+            for (let y = yStart; y <= yEnd; y++) {
+                const c = {x, y};
+                if (inclusive || (!coord.eq(from, c) && !coord.eq(to, c))) {
+                    list.push(c);
+                }
+            }
+        }
+
+        return list;
+    },
+    toCoord: (s) => {
+        const split = s.split(',');
+        return {x: Number(split[0]), y: Number(split[1])};
     },
     toString: (coordinate) => `${coordinate.x},${coordinate.y}`,
-    eq: (a, b) => a.x === b.x && a.y === b.y
+    eq: (a, b) => a.x === b.x && a.y === b.y,
+    getBounds: (coords) => {
+        const bounds = {
+            min: {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY},
+            max: {x: Number.NEGATIVE_INFINITY, y: Number.NEGATIVE_INFINITY}
+        };
+
+        for (const c of coords) {
+            bounds.min.x = Math.min(c.x, bounds.min.x);
+            bounds.min.y = Math.min(c.y, bounds.min.y);
+            bounds.max.x = Math.max(c.x, bounds.max.x);
+            bounds.max.y = Math.max(c.y, bounds.max.y);
+        }
+
+        return bounds;
+    }
 };
 
 module.exports = {
