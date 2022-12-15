@@ -195,6 +195,9 @@ const coord = {
         }
 
         return bounds;
+    },
+    manhattan: (from, to) => {
+        return Math.abs(from.x - to.x) + Math.abs(from.y - to. y);
     }
 };
 
