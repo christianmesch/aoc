@@ -11,18 +11,38 @@ const readInt = (inputFileName, sep = '\n', leaveEmpty = false) => {
 
 const range = (start, end, delta = 1) => {
     return new Array(Math.ceil((end - start) / delta)).fill().map((_, i) => start + i * delta);
-}
+};
+
+const permutations = (input) => {
+    const result = [];
+
+    const permute = (arr, m = []) => {
+        if (arr.length === 0) {
+            result.push(m)
+        } else {
+            for (let i = 0; i < arr.length; i++) {
+                const curr = arr.slice();
+                const next = curr.splice(i, 1);
+                permute(curr.slice(), m.concat(next))
+            }
+        }
+    }
+
+    permute(input)
+
+    return result;
+};
 
 const lists = {
     alpha: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
     alphaUpper: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-}
+};
 
 const compareTo = (a, b) => {
     if (a === b) return 0;
     if (a < b) return -1;
     return 1;
-}
+};
 
 const median = (numbers) => {
     if (numbers.length === 0) return 0;
@@ -35,13 +55,13 @@ const median = (numbers) => {
     }
 
     return sorted[middle];
-}
+};
 
 const mean = (numbers) => {
     if (numbers.length === 0) return 0;
 
     return numbers.reduce((acc, curr) => acc + curr, 0) / numbers.length;
-}
+};
 
 const set = {
     superset: (a, b) => {
