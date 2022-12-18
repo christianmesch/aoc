@@ -156,26 +156,38 @@ const coord = {
     directionToDelta: (direction, num = 1) => {
         switch (direction) {
             case 'R':
+            case 'E':
+            case '>':
                 return {x: num, y: 0};
             case 'L':
+            case 'W':
+            case '<':
                 return {x: -num, y: 0};
             case 'U':
+            case 'N':
+            case '^':
                 return {x: 0, y: num};
             case 'D':
+            case 'S':
+            case 'V':
                 return {x: 0, y: -num};
         }
     },
-    add: (coordinate, delta) => {
-        coordinate.x += delta.x;
-        coordinate.y += delta.y;
+    add: (coordinate, delta, copy = false) => {
+        const c = copy ? {...coordinate} : coordinate;
 
-        return coordinate;
+        c.x += delta.x;
+        c.y += delta.y;
+
+        return c;
     },
-    sub: (coordinate, delta) => {
-        coordinate.x -= delta.x;
-        coordinate.y -= delta.y;
+    sub: (coordinate, delta, copy = false) => {
+        const c = copy ? {...coordinate} : coordinate;
 
-        return coordinate;
+        c.x -= delta.x;
+        c.y -= delta.y;
+
+        return c;
     },
     expand: (from, to, inclusive = true) => {
         const list = [];
@@ -217,7 +229,7 @@ const coord = {
         return bounds;
     },
     manhattan: (from, to) => {
-        return Math.abs(from.x - to.x) + Math.abs(from.y - to. y);
+        return Math.abs(from.x - to.x) + Math.abs(from.y - to.y);
     }
 };
 
