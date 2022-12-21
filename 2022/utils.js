@@ -178,6 +178,9 @@ const coord = {
 
         c.x += delta.x;
         c.y += delta.y;
+        if (c.z !== undefined) {
+            c.z += delta.z;
+        }
 
         return c;
     },
@@ -186,6 +189,9 @@ const coord = {
 
         c.x -= delta.x;
         c.y -= delta.y;
+        if (c.z !== undefined) {
+            c.z -= delta.z;
+        }
 
         return c;
     },
@@ -207,23 +213,50 @@ const coord = {
 
         return list;
     },
+    adjacentCoords: (coord) => {
+        if (coord.z !== undefined) {
+            return [
+                {x: coord.x - 1, y: coord.y, z: coord.z},
+                {x: coord.x + 1, y: coord.y, z: coord.z},
+                {x: coord.x, y: coord.y - 1, z: coord.z},
+                {x: coord.x, y: coord.y + 1, z: coord.z},
+                {x: coord.x, y: coord.y, z: coord.z - 1},
+                {x: coord.x, y: coord.y, z: coord.z + 1},
+            ];
+        } else {
+            return [
+                {x: coord.x - 1, y: coord.y},
+                {x: coord.x + 1, y: coord.y},
+                {x: coord.x, y: coord.y - 1},
+                {x: coord.x, y: coord.y + 1},
+            ];
+        }
+    },
     toCoord: (s) => {
         const split = s.split(',');
-        return {x: Number(split[0]), y: Number(split[1])};
+        return {x: Number(split[0]), y: Number(split[1]), z: Number(split[2] ? split[2] : '0')};
     },
-    toString: (coordinate) => `${coordinate.x},${coordinate.y}`,
-    eq: (a, b) => a.x === b.x && a.y === b.y,
+    toString: (coordinate) => {
+        if (coordinate.z === undefined) {
+            return `${coordinate.x},${coordinate.y}`;
+        } else {
+            return `${coordinate.x},${coordinate.y},${coordinate.z}`;
+        }
+    },
+    eq: (a, b) => a.x === b.x && a.y === b.y && a.z === b.z,
     getBounds: (coords) => {
         const bounds = {
-            min: {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY},
-            max: {x: Number.NEGATIVE_INFINITY, y: Number.NEGATIVE_INFINITY}
+            min: {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY, z: Number.POSITIVE_INFINITY},
+            max: {x: Number.NEGATIVE_INFINITY, y: Number.NEGATIVE_INFINITY, z: Number.NEGATIVE_INFINITY}
         };
 
         for (const c of coords) {
             bounds.min.x = Math.min(c.x, bounds.min.x);
             bounds.min.y = Math.min(c.y, bounds.min.y);
+            bounds.min.z = Math.min(c.z, bounds.min.z);
             bounds.max.x = Math.max(c.x, bounds.max.x);
             bounds.max.y = Math.max(c.y, bounds.max.y);
+            bounds.max.z = Math.max(c.z, bounds.max.z);
         }
 
         return bounds;
