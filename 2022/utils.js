@@ -63,6 +63,10 @@ const mean = (numbers) => {
     return numbers.reduce((acc, curr) => acc + curr, 0) / numbers.length;
 };
 
+const parseMathExpression = (expression) => {
+    return Function(`'use strict'; return (${expression})`)()
+};
+
 const set = {
     superset: (a, b) => {
         for (const e of b) {
@@ -274,6 +278,7 @@ module.exports = {
     compareTo,
     median,
     mean,
+    parseMathExpression,
     set,
     grid,
     coord,
