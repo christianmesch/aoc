@@ -33,6 +33,17 @@ const permutations = (input) => {
     return result;
 };
 
+const findLastIndex = (arr, pred = (v, i, arr) => true) => {
+    let i = arr.length;
+    while (i--) {
+        if (pred(arr[i], i, arr)) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 const lists = {
     alpha: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
     alphaUpper: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -248,6 +259,29 @@ const coord = {
         }
     },
     eq: (a, b) => a.x === b.x && a.y === b.y && a.z === b.z,
+    rotate: (delta, direction) => {
+        if (delta.x === 0 && delta.y === 1) {
+            return {
+                x: direction === 'L' ? 1 : -1,
+                y: 0
+            }
+        } else if (delta.x === 0 && delta.y === -1) {
+            return {
+                x: direction === 'L' ? -1 : 1,
+                y: 0
+            }
+        } else if (delta.x === 1 && delta.y === 0) {
+            return {
+                x: 0,
+                y: direction === 'L' ? -1 : 1,
+            }
+        } else if (delta.x === -1 && delta.y === 0) {
+            return {
+                x: 0,
+                y: direction === 'L' ? 1 : -1,
+            }
+        }
+    },
     getBounds: (coords) => {
         const bounds = {
             min: {x: Number.POSITIVE_INFINITY, y: Number.POSITIVE_INFINITY, z: Number.POSITIVE_INFINITY},
@@ -275,6 +309,7 @@ module.exports = {
     readInt,
     range,
     lists,
+    findLastIndex,
     compareTo,
     median,
     mean,
