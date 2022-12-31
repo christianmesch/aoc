@@ -186,6 +186,14 @@ const coord = {
             case 'S':
             case 'V':
                 return {x: 0, y: -num};
+            case 'NW':
+                return {x: num, y: -num};
+            case 'NE':
+                return {x: num, y: num};
+            case 'SW':
+                return {x: -num, y: -num};
+            case 'SE':
+                return {x: -num, y: num};
         }
     },
     add: (coordinate, delta, copy = false) => {
