@@ -74,6 +74,13 @@ const mean = (numbers) => {
     return numbers.reduce((acc, curr) => acc + curr, 0) / numbers.length;
 };
 
+const lcm = (a, b) => {
+    let min = Math.min(a, b);
+    while (!(min % a === 0 && min % b === 0)) min++;
+
+    return min;
+}
+
 const parseMathExpression = (expression) => {
     return Function(`'use strict'; return (${expression})`)()
 };
@@ -168,7 +175,9 @@ const grid = {
 };
 
 const coord = {
-    directionToDelta: (direction, num = 1) => {
+    directionToDelta: (direction, num = 1, swapY = false) => {
+        const swap = swapY ? -1 : 1;
+
         switch (direction) {
             case 'R':
             case 'E':
@@ -181,19 +190,20 @@ const coord = {
             case 'U':
             case 'N':
             case '^':
-                return {x: 0, y: num};
+                return {x: 0, y: swap * num};
             case 'D':
             case 'S':
             case 'V':
-                return {x: 0, y: -num};
+            case 'v':
+                return {x: 0, y: swap * -num};
             case 'NW':
-                return {x: num, y: -num};
+                return {x: num, y: swap * -num};
             case 'NE':
-                return {x: num, y: num};
+                return {x: num, y: swap * num};
             case 'SW':
-                return {x: -num, y: -num};
+                return {x: -num, y: swap * -num};
             case 'SE':
-                return {x: -num, y: num};
+                return {x: -num, y: swap * num};
         }
     },
     add: (coordinate, delta, copy = false) => {
@@ -321,6 +331,7 @@ module.exports = {
     compareTo,
     median,
     mean,
+    lcm,
     parseMathExpression,
     set,
     grid,
