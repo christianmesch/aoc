@@ -67,12 +67,10 @@ class Point {
         }
 
         if (includeDiagonal) {
-            adj.push([
-                [x + 1, y + 1],
-                [x + 1, y + 1],
-                [x - 1, y + 1],
-                [x - 1, y - 1]
-            ]);
+            adj.push([x + 1, y + 1]);
+            adj.push([x + 1, y - 1]);
+            adj.push([x - 1, y + 1]);
+            adj.push([x - 1, y - 1]);
         }
 
         return adj.map((p) => new Point(p));

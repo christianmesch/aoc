@@ -245,6 +245,18 @@ const points = {
     }
 };
 
+const strings = {
+    match: (line, regex) => {
+        let res = [];
+        let m;
+        while ((m = regex.exec(line)) !== null) {
+            res.push([m[0], m.index, regex.lastIndex - 1]);
+        }
+
+        return res;
+    }
+}
+
 module.exports = {
     inputs,
     lists,
@@ -252,5 +264,6 @@ module.exports = {
     sets,
     grids,
     points,
+    strings,
     Point,
 };
