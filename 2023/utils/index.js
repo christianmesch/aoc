@@ -52,6 +52,15 @@ const lists = {
         }
 
         return -1;
+    },
+
+    toChunks: (arr, chunkSize = 1) => {
+        const res = [];
+        for (let i = 0; i < arr.length; i += chunkSize) {
+            res.push(arr.slice(i, i + chunkSize));
+        }
+
+        return res;
     }
 };
 
