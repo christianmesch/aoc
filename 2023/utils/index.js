@@ -45,6 +45,8 @@ const lists = {
         return result;
     },
 
+    cartesian: (a) => a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat()))),
+
     findLastIndex: (arr, pred = (v, i, arr) => true) => {
         let i = arr.length;
         while (i--) {
@@ -63,6 +65,14 @@ const lists = {
         }
 
         return res;
+    },
+
+    compareTo: (a, b) => {
+        for (let i = 0; i < a.length; i++) {
+            if (a[i] !== b[i]) return a[i] - b[i];
+        }
+
+        return 0;
     }
 };
 
