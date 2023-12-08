@@ -107,14 +107,8 @@ const math = {
         return math.gcd(b, a % b);
     },
 
-    lcm: (a, b) => {
-        let min = Math.min(a, b);
-        while (!(min % a === 0 && min % b === 0)) min++;
-
-        return min;
-    },
-
-    lcmList: (arr) => {
+    lcm: (...vals) => {
+        const arr = vals.flat();
         let res = arr[0];
         for (let i = 1; i < arr.length; i++) {
             res = (arr[i] * res) / math.gcd(arr[i], res); 

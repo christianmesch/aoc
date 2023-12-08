@@ -27,7 +27,7 @@ const part1 = () => {
 };
 
 const part2 = () => {
-    return math.lcmList([...network]
+    return math.lcm([...network]
         .map(([k]) => k)
         .filter((n) => n.endsWith('A'))
         .map((n) => solve(n, 'Z')));
