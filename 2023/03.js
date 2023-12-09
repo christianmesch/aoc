@@ -17,9 +17,10 @@ const numbers = input
     .flatMap((line, y) => strings.match(line, /\d+/gi).map(([n, b, e]) => [Number(n), b, e, y]));
 
 const part1 = () => {
-    return numbers.filter(([, xb, xe, y]) => symbols(/[^\w\s\d\.]/)
-        .flatMap((p) => p.adjacent(true))
-        .some((p) => p.y() == y && p.x() >= xb && p.x() <= xe))
+    const sym = symbols(/[^\d\.]/)
+        .flatMap((p) => p.adjacent(true));
+
+    return numbers.filter(([, xb, xe, y]) => sym.some((p) => p.y() == y && p.x() >= xb && p.x() <= xe))
         .reduce((acc, [curr]) => acc + curr, 0);
 };
 
