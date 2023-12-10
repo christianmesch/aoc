@@ -224,8 +224,8 @@ const points = {
         };
 
         for (const p of points) {
-            bounds.min = p.map((v, i) => Math.min(v, bounds.min[i]));
-            bounds.max = p.map((v, i) => Math.max(v, bounds.max[i]));
+            bounds.min = p.val.map((v, i) => Math.min(v, bounds.min[i]));
+            bounds.max = p.val.map((v, i) => Math.max(v, bounds.max[i]));
         }
 
         return bounds;

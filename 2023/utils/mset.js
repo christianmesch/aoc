@@ -41,7 +41,7 @@ class MSet {
     }
 
     size() {
-        this.set.size;
+        return this.set.size;
     }
 
     has(value) {

@@ -6,11 +6,15 @@ class Point {
         this.val = val;
     }
 
-    move(delta) {
+    move(delta, sub = false) {
         const d = Array.isArray(delta) ? new Point(delta) : delta;
 
         for (let i = 0; i < this.val.length; i++) {
-            this.val[i] += d.val[i];
+            if (sub) {
+                this.val[i] -= d.val[i];
+            } else {
+                this.val[i] += d.val[i];
+            }
         }
 
         return this;
@@ -18,6 +22,10 @@ class Point {
 
     add(delta) {
         return (new Point([...this.val])).move(delta);
+    }
+
+    remove(delta) {
+        return (new Point([...this.val])).move(delta, true);
     }
 
     x() {
