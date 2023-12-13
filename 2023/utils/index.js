@@ -1,4 +1,5 @@
 const { Point } = require('./point');
+const { Value } = require('./value');
 const { Cache } = require('./cache');
 const { MSet } = require('./mset');
 const { sets } = require('./sets');
@@ -192,8 +193,8 @@ const grids = {
         return input.map((row) => row[col]);
     },
 
-    allColumns: (input) => {
-        return lists.range(0, input.length).map((c) => grids.column(input, c));
+    allColumns: (grid) => {
+        return lists.range(0, grid[0].length).map((c) => grids.column(grid, c));
     }
 };
 
@@ -286,6 +287,7 @@ module.exports = {
     points,
     strings,
     Point,
+    Value,
     Cache,
     MSet
 };

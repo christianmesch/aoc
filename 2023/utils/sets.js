@@ -17,6 +17,10 @@ const sets = {
     },
 
     intersection: (a, b) => {
+        if (Array.isArray(a)) {
+            return a.reduce((acc, curr) => sets.intersection(acc, curr), a[0]);
+        }
+
         const i = new Set();
         for (const e of a) {
             if (b.has(e)) i.add(e);
