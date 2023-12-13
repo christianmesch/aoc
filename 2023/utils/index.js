@@ -1,4 +1,5 @@
 const { Point } = require('./point');
+const { Cache } = require('./cache');
 const { MSet } = require('./mset');
 const { sets } = require('./sets');
 
@@ -43,6 +44,38 @@ const lists = {
 
         permute(input);
         return result;
+    },
+
+    permWithRep: (vals = [], k = 0) => {
+        // https://rosettacode.org/wiki/Permutations_with_repetitions#ES6
+
+        // replicateM n act performs the action n times, gathering the results.
+        // replicateM :: (Applicative m) => Int -> m a -> m [a]
+        const replicateM = (n, f) => {
+            const loop = x => x <= 0 ? [
+                []
+            ] : liftA2(cons, f, loop(x - 1));
+            return loop(n);
+        };
+
+        // Lift a binary function to actions.
+        // liftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
+        const liftA2 = (f, a, b) =>
+            listApply(a.map(curry(f)), b);
+
+        // <*>
+        // listApply :: [(a -> b)] -> [a] -> [b]
+        const listApply = (fs, xs) =>
+            [].concat.apply([], fs.map(f =>
+            [].concat.apply([], xs.map(x => [f(x)]))));
+
+        // curry :: ((a, b) -> c) -> a -> b -> c
+        const curry = f => a => b => f(a, b);
+
+        // cons :: a -> [a] -> [a]
+        const cons = (x, xs) => [x].concat(xs);
+
+        return replicateM(k, vals);
     },
 
     cartesian: (a) => a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat()))),
@@ -253,5 +286,6 @@ module.exports = {
     points,
     strings,
     Point,
+    Cache,
     MSet
 };
