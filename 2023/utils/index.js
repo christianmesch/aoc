@@ -195,6 +195,11 @@ const grids = {
 
     allColumns: (grid) => {
         return lists.range(0, grid[0].length).map((c) => grids.column(grid, c));
+    },
+
+    rotate: (grid, clockwise = false) => {
+        const r = clockwise ? lists.range(0, grid[0].length) : lists.range(0, grid[0].length).reverse();
+        return r.map((c) => clockwise ? grids.column(grid, c).reverse() : grids.column(grid, c));
     }
 };
 
@@ -275,6 +280,10 @@ const strings = {
         }
 
         return res;
+    },
+
+    replaceAt: (string = '', index, value) => {
+        return string.slice(0, index) + value + string.slice(index + 1);
     }
 }
 

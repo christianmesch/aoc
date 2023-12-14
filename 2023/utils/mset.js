@@ -52,6 +52,10 @@ class MSet {
         return [...this.map].map(([, v]) => v);
     }
 
+    keys() {
+        return [...this.set];
+    }
+
     delete(value) {
         if (this.has(value)) {
             this.set.delete(value.toString());

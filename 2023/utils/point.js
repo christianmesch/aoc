@@ -96,6 +96,10 @@ class Point {
             .reduce((acc, curr) => acc + curr, 0);
     }
 
+    isInBounds(bounds) {
+        return this.val.every((v, i) => bounds.min[i] <= v && v <= bounds.max[i]);
+    }
+
     toString() {
         return this.val.join(',');
     }
