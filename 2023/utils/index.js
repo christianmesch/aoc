@@ -285,7 +285,7 @@ const strings = {
     replaceAt: (string = '', index, value) => {
         return string.slice(0, index) + value + string.slice(index + 1);
     }
-}
+};
 
 module.exports = {
     inputs,
