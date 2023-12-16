@@ -23,7 +23,7 @@ const findMirror = (line = '') => {
 };
 
 const findReflectionLine = (pattern, original) => {
-    const pvMirrors = grids.allColumns(pattern).map((line) => findMirror(line.join('')));
+    const pvMirrors = grids.transpose(pattern).map((line) => findMirror(line.join('')));
     const vMirrors = pvMirrors.reduce((acc, curr) => acc.intersection(curr), pvMirrors[0])
         .values()
         .sort((a, b) => b.val[1] - a.val[1])

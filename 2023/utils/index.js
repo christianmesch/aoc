@@ -193,7 +193,7 @@ const grids = {
         return input.map((row) => row[col]);
     },
 
-    allColumns: (grid) => {
+    transpose: (grid) => {
         return lists.range(0, grid[0].length).map((c) => grids.column(grid, c));
     },
 

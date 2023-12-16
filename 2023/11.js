@@ -9,7 +9,7 @@ const emptyRows = universe.map((row, i) => [row, i])
     .filter(([row]) => !row.includes('#'))
     .map(([, i]) => i);
 
-const emptyColumns = grids.allColumns(universe).map((col, i) => [col, i])
+const emptyColumns = grids.transpose(universe).map((col, i) => [col, i])
     .filter(([col]) => !col.includes('#'))
     .map(([, i]) => i);
 
