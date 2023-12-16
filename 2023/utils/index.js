@@ -200,6 +200,11 @@ const grids = {
     rotate: (grid, clockwise = false) => {
         const r = clockwise ? lists.range(0, grid[0].length) : lists.range(0, grid[0].length).reverse();
         return r.map((c) => clockwise ? grids.column(grid, c).reverse() : grids.column(grid, c));
+    },
+
+    fromBounds: (bounds, defaultValue = () => undefined) => {
+        return new Array(bounds.max[1] - bounds.min[1] + 1).fill(undefined).map((yv, y) =>
+            new Array(bounds.max[0] - bounds.min[0] + 1).fill(undefined).map((xv, x) => defaultValue(x, y, xv, yv)));
     }
 };
 
