@@ -2,6 +2,7 @@ const { Point } = require('./point');
 const { Value } = require('./value');
 const { Cache } = require('./cache');
 const { MSet } = require('./mset');
+const { PriorityQueue } = require('./priority-queue');
 const { sets } = require('./sets');
 
 const inputs = {
@@ -303,5 +304,6 @@ module.exports = {
     Point,
     Value,
     Cache,
-    MSet
+    MSet,
+    PriorityQueue
 };

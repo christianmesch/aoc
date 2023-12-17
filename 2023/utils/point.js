@@ -52,6 +52,10 @@ class Point {
         return this;
     }
 
+    turn(direction) {
+        return (new Point([...this.val])).rotate(direction);
+    }
+
     adjacent(includeDiagonal = false) {
         const [x, y, z] = this.val;
         let adj;

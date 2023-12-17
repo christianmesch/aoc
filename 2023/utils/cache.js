@@ -3,10 +3,8 @@ class Cache {
     map = new Map();
 
     set(key, value) {
-        if (!this.has(key)) {
-            const sKey = JSON.stringify(key);
-            this.map.set(sKey, value);
-        }
+        const sKey = JSON.stringify(key);
+        this.map.set(sKey, value);
     }
 
     clear() {
