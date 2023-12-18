@@ -215,19 +215,23 @@ const points = {
             case 'R':
             case 'E':
             case '>':
+            case '0':
                 return new Point([num, 0]);
             case 'L':
             case 'W':
             case '<':
+            case '2':
                 return new Point([-num, 0]);
             case 'U':
             case 'N':
             case '^':
+            case '3':
                 return new Point([0, -num]);
             case 'D':
             case 'S':
             case 'V':
             case 'v':
+            case '1':
                 return new Point([0, num]);
             case 'NW':
                 return new Point([-num, -num]);
@@ -274,6 +278,17 @@ const points = {
         }
 
         return bounds;
+    },
+
+    shoelace : (ps) => {
+        let sum = 0;
+        for (let i = 0; i < ps.length - 1; i++) {
+            const p1 = ps.at(i);
+            const p2 = ps.at((i + 1) % ps.length);
+            sum += (p1.x() * p2.y() - p2.x() * p1.y());
+        }
+
+        return Math.abs(sum) / 2;
     }
 };
 

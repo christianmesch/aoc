@@ -104,6 +104,10 @@ class Point {
         return this.val.every((v, i) => bounds.min[i] <= v && v <= bounds.max[i]);
     }
 
+    copy() {
+        return new Point([...this.val]);
+    }
+
     toString() {
         return this.val.join(',');
     }
