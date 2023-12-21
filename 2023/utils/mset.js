@@ -10,6 +10,8 @@ class MSet {
             this.#_arrayConstructor(value);
         } else if (value === null || value === undefined) {
             return;
+        } else if (value instanceof MSet) {
+            this.#_msetConstructor(value);
         } else {
             this.#_valueConstructor(value);
         }
@@ -19,12 +21,20 @@ class MSet {
         this.addAll(values);
     }
 
+    #_msetConstructor(value) {
+        this.addAll(value.values());
+    }
+
     #_valueConstructor(value) {
         this.add(value);
     }
 
     addAll(values) {
-        values.forEach((v) => this.add(v));
+        if (values instanceof MSet) {
+            this.addAll(values.values());
+        } else {
+            values.forEach((v) => this.add(v));
+        }
     }
 
     add(value) {
