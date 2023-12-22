@@ -104,6 +104,12 @@ class Point {
         return this.val.every((v, i) => bounds.min[i] <= v && v <= bounds.max[i]);
     }
 
+    // Bad name and implementation, will probably need to revisit at some point
+    toDelta() {
+        this.val = this.val.map((v) => v === 0 ? 0 : v < 0 ? -1 : 1);
+        return this;
+    }
+
     copy() {
         return new Point([...this.val]);
     }
