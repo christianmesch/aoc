@@ -2,6 +2,7 @@ const { Point } = require('./point');
 const { Value } = require('./value');
 const { Cache } = require('./cache');
 const { MSet } = require('./mset');
+const { MMap } = require('./mmap');
 const { PriorityQueue } = require('./priority-queue');
 const { sets } = require('./sets');
 
@@ -206,6 +207,12 @@ const grids = {
     fromBounds: (bounds, defaultValue = () => undefined) => {
         return new Array(bounds.max[1] - bounds.min[1] + 1).fill(undefined).map((yv, y) =>
             new Array(bounds.max[0] - bounds.min[0] + 1).fill(undefined).map((xv, x) => defaultValue(x, y, xv, yv)));
+    },
+
+    toBounds: (grid) => {
+        return {
+            min: [0, 0], max: [grid[0].length - 1, grid.length - 1]
+        };
     }
 };
 
@@ -320,5 +327,6 @@ module.exports = {
     Value,
     Cache,
     MSet,
+    MMap,
     PriorityQueue
 };
