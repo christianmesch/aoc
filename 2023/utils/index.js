@@ -113,6 +113,12 @@ const lists = {
 };
 
 const math = {
+    randomInt: (min, max) => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
+    },
+
     compareTo: (a, b) => {
         if (a === b) return 0;
         if (a < b) return -1;

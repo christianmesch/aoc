@@ -24,6 +24,10 @@ class PriorityQueue {
     isEmpty() {
         return this.queue.length === 0;
     }
+
+    has(predicate = (value) => false) {
+        return this.queue.findIndex(predicate) !== -1;
+    }
 }
 
 module.exports = {
