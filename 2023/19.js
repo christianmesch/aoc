@@ -26,7 +26,7 @@ const workflows = new Map(input[0].map((w) => {
     return [n, rules];
 }));
 
-const accepterRanges = (currFlow, ranges) => {
+const acceptedRanges = (currFlow, ranges) => {
     if (currFlow === 'A') return ranges;
     if (currFlow === 'R') return [];
 
@@ -38,13 +38,13 @@ const accepterRanges = (currFlow, ranges) => {
         if (rule.comp === '>') {
             tmpRanges[rule.var] = [tmpRanges[rule.var][0], Math.min(rule.val, tmpRanges[rule.var][1])];
             newRanges[rule.var] = [Math.max(rule.val, newRanges[rule.var][0]), newRanges[rule.var][1]];
-            return accepterRanges(rule.next, newRanges);
+            return acceptedRanges(rule.next, newRanges);
         } else if (rule.comp === '<') {
             tmpRanges[rule.var] = [Math.max(rule.val - 1, tmpRanges[rule.var][0]), tmpRanges[rule.var][1]];
             newRanges[rule.var] = [newRanges[rule.var][0], Math.min(rule.val - 1, newRanges[rule.var][1])];
-            return accepterRanges(rule.next, newRanges);
+            return acceptedRanges(rule.next, newRanges);
         } else {
-            return accepterRanges(rule.next, newRanges);
+            return acceptedRanges(rule.next, newRanges);
         }
     });
 };
@@ -68,7 +68,7 @@ const part1 = () => {
 };
 
 const part2 = () => {
-    return accepterRanges('in', {
+    return acceptedRanges('in', {
         x: [0, 4000],
         m: [0, 4000],
         a: [0, 4000],

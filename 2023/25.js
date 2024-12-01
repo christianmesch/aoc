@@ -65,8 +65,8 @@ const path = (from, to) => {
 
 const part1 = () => {
     const nodes = [...neighbors].map(([k]) => k);
+    
     const res = [];
-
     for (let i = 0; i < 100; i++) {
         const from = nodes[math.randomInt(0, nodes.length)];
         const to = nodes[math.randomInt(0, nodes.length)];
@@ -74,21 +74,18 @@ const part1 = () => {
         res.push(path(from, to));
     }
 
-    const connections = res.flatMap((v) => v);
-
-    [...connections.reduce((acc, [l, r]) => {
-        const key = `${l}${r}`;
-        const rKey = `${r}${l}`;
+    [...res.flatMap((v) => v)
+        .reduce((acc, curr) => {
+        const key = curr.sort((a, b) => (a > b) - (a < b)).join('');
         if (acc.has(key)) {
             acc.set(key, acc.get(key) + 1);
-        } else if (acc.has(rKey)) {
-            acc.set(rKey, acc.get(rKey) + 1);
         } else {
             acc.set(key, 1);
         }
 
         return acc;
-    }, new Map())].sort(([, a], [, b]) => b - a)
+    }, new Map())]
+    .sort(([, a], [, b]) => b - a)
     .slice(0, 3)
     .forEach(([k]) => {
         const l = k.slice(0, 3);

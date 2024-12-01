@@ -73,12 +73,12 @@ const part2 = async () => {
 
     const model = solver.model();
 
-    console.log([model.eval(x), model.eval(y), model.eval(z)]
-        .map(Number).reduce((acc, curr) => acc + curr, 0));
+    return [model.eval(x), model.eval(y), model.eval(z)]
+        .map(Number).reduce((acc, curr) => acc + curr, 0);
 };
 
 if (!args[3] || args[3] === '1') {
     console.log(part1());
 } else {
-    part2();
+    part2().then(console.log);
 }
