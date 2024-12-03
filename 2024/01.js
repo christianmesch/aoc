@@ -8,10 +8,8 @@ const input = inputs
         acc[0].push(Number(curr[0]));
         acc[1].push(Number(curr[1]));
         return acc;
-    }, [[], []]);
-
-input[0].sort();
-input[1].sort();
+    }, [[], []])
+    .map((a) => a.sort());
 
 const part1 = (input) => {
     return input[0].map((row, i) => Math.abs(row - input[1][i]))

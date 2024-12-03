@@ -3,7 +3,7 @@ const { inputs } = require('./utils');
 
 const input = inputs
     .read(args[2])
-    .map((row) => row.split(' ').map((n) => Number(n)));
+    .map((row) => row.split(' ').map(Number));
 
 const isSafe = (report) => {
     return report.every((val, i) => {
