@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DAYS=( 01 02 03 )
+DAYS=( 01 02 03 04 )
 
 # Wall of shame (VERY slow solutions): 
 

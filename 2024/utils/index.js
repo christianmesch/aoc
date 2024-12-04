@@ -94,6 +94,15 @@ const lists = {
         return -1;
     },
 
+    findAllIndexes: (arr, value) => {
+        const indexes = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === value) indexes.push(i);
+        }
+
+        return indexes;
+    },
+
     toChunks: (arr, chunkSize = 1) => {
         const res = [];
         for (let i = 0; i < arr.length; i += chunkSize) {
