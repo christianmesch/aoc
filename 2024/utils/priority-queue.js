@@ -4,13 +4,20 @@ class PriorityQueue {
 
     queue = [];
 
-    constructor(sortFunc = (a, b) => a - b) {
+    constructor(sortFunc = (a, b) => a - b, values = []) {
         this.sortFunc = sortFunc;
+        if (values.length) {
+            this.enqueueAll(values);
+        }
     }
 
     enqueue(val) {
         const idx = this.queue.findIndex((v) => this.sortFunc(val, v) === -1);
         this.queue.splice(idx !== -1 ? idx : this.queue.length, 0, val);
+    }
+
+    enqueueAll(arr) {
+        arr.forEach((val) => this.enqueue(val));
     }
 
     dequeue() {
