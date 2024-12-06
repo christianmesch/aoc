@@ -1,5 +1,5 @@
 const args = process.argv;
-const { inputs, PriorityQueue } = require('./utils');
+const { inputs } = require('./utils');
 
 const input = inputs.read(args[2], '\n\n');
 
@@ -19,9 +19,9 @@ const sortFunc = (a, b) => {
 }
 
 const solve = (firstPart = true) => {
-    return updates.map((arr) => new PriorityQueue(sortFunc, arr))
-        .filter((pq, i) => firstPart === pq.queue.every((v, j) => v === updates[i][j]))
-        .reduce((acc, curr) => acc + curr.queue[Math.floor(curr.queue.length / 2)], 0);
+    return updates.map((arr) => [...arr].sort(sortFunc))
+        .filter((sorted, i) => firstPart === sorted.every((v, j) => v === updates[i][j]))
+        .reduce((acc, curr) => acc + curr[Math.floor(curr.length / 2)], 0);
 };
 
 if (!args[3] || args[3] === '1') {

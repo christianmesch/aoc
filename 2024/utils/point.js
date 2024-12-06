@@ -44,10 +44,11 @@ class Point {
         const [x, y] = this.val;
         switch (direction) {
             case 'L':
-                return new Point([y, -x]);
+                this.val = [y, -x];
             case 'R':
-                return new Point([-y, x]);
+                this.val = [-y, x];
         }
+        this.val.map((v) => v == -0 ? 0 : v);
 
         return this;
     }
@@ -100,8 +101,9 @@ class Point {
             .reduce((acc, curr) => acc + curr, 0);
     }
 
-    isInBounds(bounds) {
-        return this.val.every((v, i) => bounds.min[i] <= v && v <= bounds.max[i]);
+    isInBounds(bounds, delta = [0, 0, 0]) {
+        const d = Array.isArray(delta) ? delta : delta.val; 
+        return this.val.every((v, i) => bounds.min[i] <= v + d[i] && v + d[i] <= bounds.max[i]);
     }
 
     // Bad name and implementation, will probably need to revisit at some point

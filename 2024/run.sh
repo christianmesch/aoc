@@ -2,7 +2,7 @@
 
 DAYS=( 01 02 03 04 05 )
 
-# Wall of shame (VERY slow solutions): 
+# Wall of shame (VERY slow solutions): 06b ~12s
 
 STARTALL=$(date +%s.%N)
 for day in "${DAYS[@]}"

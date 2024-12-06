@@ -42,7 +42,11 @@ class MSet {
         if (!this.set.has(sValue)) {
             this.set.add(sValue);
             this.map.set(sValue, value);
+
+            return true;
         }
+
+        return false;
     }
 
     clear() {

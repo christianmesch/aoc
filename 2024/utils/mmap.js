@@ -40,10 +40,6 @@ class MMap {
         return this.map.has(key.toString());
     }
 
-    values() {
-        return [...this.map].map(([, v]) => v);
-    }
-
     delete(key) {
         if (this.has(key)) {
             const value = this.map.get(key.toString());
@@ -54,6 +50,14 @@ class MMap {
         }
 
         return undefined;
+    }
+
+    copy() {
+        const newMMap = new MMap();
+        this.map.forEach((val, key) => newMMap.map.set(key, val));
+        this.keyMap.forEach((val, key) => newMMap.keyMap.set(key, val));
+
+        return newMMap;
     }
 }
 
