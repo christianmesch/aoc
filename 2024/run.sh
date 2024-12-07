@@ -1,8 +1,8 @@
 #!/bin/sh
 
-DAYS=( 01 02 03 04 05 07 )
+DAYS=( 01 02 03 04 05 06 07 )
 
-# Wall of shame (VERY slow solutions): 06b ~12s
+# Wall of shame (VERY slow solutions):
 
 STARTALL=$(date +%s.%N)
 for day in "${DAYS[@]}"

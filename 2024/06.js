@@ -10,12 +10,14 @@ const guardStart = {
     d: new Point([0, -1])
 };
 
+const visited = new MMap();
+visited.set(guardStart.p.copy(), [guardStart.d.copy()]);
+
+const obstructions = new MSet();
+
 const bounds = grids.toBounds(map);
 
-const walk = (guard, obstruction = null) => {
-    const visited = new MMap();
-    visited.set(guard.p.copy(), [guard.d.copy()]);
-
+const walk = (guard, visited, findLoops = false, obstruction = null) => {
     while (guard.p.isInBounds(bounds, guard.d)) {
         if (map[guard.p.y() + guard.d.y()][guard.p.x() + guard.d.x()] === '#'
             || (obstruction && obstruction.eq(guard.p.add(guard.d)))) {
@@ -23,6 +25,13 @@ const walk = (guard, obstruction = null) => {
             visited.set(guard.p.copy(), [...visited.get(guard.p), guard.d.copy()]);
 
             continue;
+        }
+
+        if (findLoops && !obstruction) {
+            const obs = guard.p.add(guard.d);
+            if (!visited.has(obs) && walk({p: guard.p.copy(), d: guard.d.copy()}, visited.copy(), findLoops, obs)) {
+                obstructions.add(obs);
+            }
         }
 
         const newPos = guard.p.move(guard.d).copy();
@@ -35,17 +44,17 @@ const walk = (guard, obstruction = null) => {
         visited.set(newPos, dirs ? [...dirs, guard.d.copy()] : [guard.d.copy()]);
     }
 
-    return obstruction ? false : visited;
+    return false;
 }
 
 const part1 = () => {
-    return walk({p: guardStart.p.copy(), d: guardStart.d.copy()}).size();
+    walk({p: guardStart.p.copy(), d: guardStart.d.copy()}, visited);
+    return visited.size();
 };
 
 const part2 = () => {
-    return walk({p: guardStart.p.copy(), d: guardStart.d.copy()})
-        .keys()
-        .filter((obs) => walk({p: guardStart.p.copy(), d: guardStart.d.copy()}, obs)).length;
+    walk({p: guardStart.p.copy(), d: guardStart.d.copy()}, visited, true);
+    return obstructions.size();
 }
 
 if (!args[3] || args[3] === '1') {
