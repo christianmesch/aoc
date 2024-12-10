@@ -4,12 +4,12 @@ const { inputs } = require('./utils');
 const input = inputs
     .read(args[2])[0]
     .split('')
-        .map(Number)
-        .map((v, i) => ({
-            original: v,
-            roomLeft: i % 2 ? v : 0,
-            vals: i % 2 ? [] : new Array(v).fill(i / 2)
-        }));
+    .map(Number)
+    .map((v, i) => ({
+        original: v,
+        roomLeft: i % 2 ? v : 0,
+        vals: i % 2 ? [] : new Array(v).fill(i / 2)
+    }));
 
 const part1 = () => {
     let r = input.length - 1;

@@ -195,7 +195,7 @@ const grids = {
                 .filter((n) => !visited.has(n.point.toString()))
                 .filter((n) => filterNeighbors(n, curr))
                 .forEach((n) => {
-                    const tmp = curr.distance + 1;
+                    const tmp = distances.get(curr.point) + 1;
                     if (!distances.has(n.point) || tmp < distances.get(n.point)) {
                         distances.set(n.point, tmp);
                         queue.push(n);
