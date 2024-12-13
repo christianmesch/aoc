@@ -228,6 +228,12 @@ const grids = {
         return {
             min: [0, 0], max: [grid[0].length - 1, grid.length - 1]
         };
+    },
+
+    print: (grid) => {
+        for (const row of grid) {
+            console.log(row.map((v) => v === undefined ? '.' : v).join(''));
+        }
     }
 };
 
@@ -288,13 +294,13 @@ const points = {
         return list;
     },
 
-    getBounds: (points) => {
+    getBounds: (ps) => {
         const bounds = {
             min: [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY],
             max: [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY]
         };
 
-        for (const p of points) {
+        for (const p of ps) {
             bounds.min = p.val.map((v, i) => Math.min(v, bounds.min[i]));
             bounds.max = p.val.map((v, i) => Math.max(v, bounds.max[i]));
         }
@@ -302,7 +308,7 @@ const points = {
         return bounds;
     },
 
-    shoelace : (ps) => {
+    shoelace: (ps) => {
         let sum = 0;
         for (let i = 0; i < ps.length - 1; i++) {
             const p1 = ps.at(i);
@@ -311,6 +317,17 @@ const points = {
         }
 
         return Math.abs(sum) / 2;
+    },
+
+    toGrid: (ps, defaultValue = () => undefined) => {
+        const bounds = points.getBounds(ps);
+        const grid = grids.fromBounds(bounds, defaultValue);
+
+        ps.forEach((p) => {
+            grid[p.y() - bounds.min[1]][p.x() - bounds.min[0]] = '#';
+        });
+
+        return grid;
     }
 };
 
