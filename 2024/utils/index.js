@@ -328,6 +328,10 @@ const points = {
         });
 
         return grid;
+    },
+
+    print: (ps) => {
+        grids.print(points.toGrid(ps));
     }
 };
 
