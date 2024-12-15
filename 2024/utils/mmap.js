@@ -7,6 +7,8 @@ class MMap {
         const sKey = key.toString();
         this.map.set(sKey, value);
         this.keyMap.set(sKey, key);
+        
+        return this;
     }
 
     get(key) {
