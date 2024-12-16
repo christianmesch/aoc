@@ -24,6 +24,14 @@ class PriorityQueue {
         return this.queue.shift();
     }
 
+    requeue(val) {
+        const i = this.queue.indexOf(val);
+        if (i !== -1) {
+            this.queue.splice(i, 1);
+            this.enqueue(val);
+        }
+    }
+
     peek() {
         return this.queue[0];
     }
