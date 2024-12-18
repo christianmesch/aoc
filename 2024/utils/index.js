@@ -16,6 +16,12 @@ const inputs = {
 
     readInt: (inputFileName, sep = '\n', leaveEmpty = false) => {
         return inputs.read(inputFileName, sep, leaveEmpty).map(Number);
+    },
+
+    readMatch: (inputFileName, regex) => {
+        return require('fs')
+            .readFileSync(inputFileName, 'utf-8')
+            .match(regex);
     }
 };
 

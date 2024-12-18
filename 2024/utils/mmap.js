@@ -11,9 +11,14 @@ class MMap {
         return this;
     }
 
-    get(key) {
+    get(key, defaultValue = undefined) {
         const sKey = key.toString();
-        return this.map.get(sKey);
+        const value = this.map.get(sKey);
+        if (value === undefined) {
+            return defaultValue;
+        }
+
+        return value;
     }
 
     keys() {
