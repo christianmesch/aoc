@@ -212,6 +212,34 @@ const grids = {
         return distances;
     },
 
+    tileBfs: (tiles, start, filterNeighbors = (n, c) => true) => {
+        const queue = [];
+        const visited = new Set([start.point.toString()]);
+        const distances = new Map();
+        distances.set(start.point, 0);
+
+        queue.push(start);
+
+        while (queue.length) {
+            const curr = queue.shift();
+
+            curr.point.adjacent()
+                .map((n) => tiles.get(n))
+                .filter((n) => n)
+                .filter((n) => !visited.has(n.toString()))
+                .filter((n) => filterNeighbors(n, curr))
+                .forEach((n) => {
+                    const tmp = distances.get(curr) + 1;
+                    if (!distances.has(n) || tmp < distances.get(n)) {
+                        distances.set(n, tmp);
+                        queue.push(n);
+                    }
+                });
+        }
+
+        return distances
+    },
+
     simplePaths: (grid, start, end, filterNeighbors = (n, c) => true) => {
         const paths = [];
         const visited = new Set([start.point.toString()]);
@@ -264,6 +292,48 @@ const grids = {
         for (const row of grid) {
             console.log(row.map((v) => v === undefined ? '.' : printVal(v)).join(''));
         }
+    }
+};
+
+const deltas = {
+    deltas: [new Point([1, 0]), new Point([0, 1]), new Point([-1, 0]), new Point([0, -1])],
+
+    directions: ['E', 'S', 'W', 'N'],
+
+    turn: (delta, clockwise = true) => {
+        const index = deltas.deltas.findIndex((d) => d.eq(delta));
+        const newIndex = (index + (clockwise ? 1 : -1) + deltas.deltas.length) % deltas.deltas.length;
+        return deltas.deltas[newIndex].copy();
+    },
+
+    directionToDelta: (direction) => {
+        switch (direction) {
+            case 'R':
+            case 'E':
+            case '>':
+            case '0':
+                return new Point([1, 0]);
+            case 'L':
+            case 'W':
+            case '<':
+            case '2':
+                return new Point([-1, 0]);
+            case 'U':
+            case 'N':
+            case '^':
+            case '3':
+                return new Point([0, -1]);
+            case 'D':
+            case 'S':
+            case 'V':
+            case 'v':
+            case '1':
+                return new Point([0, 1]);
+        }
+    },
+
+    deltaToDirection: (delta) => {
+        return deltas.directions[deltas.deltas.findIndex((d) => d.eq(delta))];
     }
 };
 
@@ -387,6 +457,7 @@ module.exports = {
     math,
     sets,
     grids,
+    deltas,
     points,
     strings,
     Point,

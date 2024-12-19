@@ -1,5 +1,5 @@
 const args = process.argv;
-const { inputs, Point, PriorityQueue, MMap, MSet, points, grids } = require('./utils');
+const { inputs, Point, PriorityQueue, MMap, MSet, deltas } = require('./utils');
 
 const input = inputs
     .read(args[2])
@@ -7,57 +7,62 @@ const input = inputs
         .flatMap((val, x) => val !== '#' ? { 
             point: new Point([x, y]), 
             val,
-            distance: val === 'S' ? 0 : Number.MAX_SAFE_INTEGER,
-            direction: val === 'S' ? new Point([1, 0]) : undefined,
-            prev: []
+            distance: new MMap()
         } : []))
     .reduce((acc, curr) => acc.set(curr.point, curr), new MMap());
 
 const start = input.values().find(({ val }) => val === 'S');
+start.distance.set(deltas.directionToDelta('E'), 0);
+
 const end = input.values().find(({ val }) => val === 'E');
 
-console.log(start);
-
-const queue = new PriorityQueue((a, b) => a.distance - b.distance, [start]);
+const queue = new PriorityQueue((a, b) => 
+    a[0].distance.get(a[1], Number.MAX_SAFE_INTEGER) - b[0].distance.get(b[1], Number.MAX_SAFE_INTEGER), 
+    [[start, deltas.directionToDelta('E')]]);
 
 while (!queue.isEmpty()) {
-    const curr = queue.dequeue();
-    //console.log(`Current: ${curr.point.val}, Distance: ${curr.distance}`);
+    const [cCell, cDirection] = queue.dequeue();
     
     [
-        curr.direction, 
-        new Point([curr.direction.y(), -curr.direction.x()]), 
-        new Point([-curr.direction.y(), curr.direction.x()])
-    ].map((dir) => [input.get(curr.point.add(dir)), dir])
-        .filter(([neighbor]) => neighbor)
-        .forEach(([neighbor, dir]) => {
-            const distance = curr.distance + (dir.eq(curr.direction) ? 1 : 1001);
-            
-            if (distance === neighbor.distance) {
-                neighbor.prev.push(curr);
-            }
-
-            if (distance <= neighbor.distance) {
-                neighbor.distance = distance;
-                neighbor.direction = dir;
-                neighbor.prev = [curr];
-                queue.enqueue(neighbor);
-            }
-        });
+        cDirection, 
+        deltas.turn(cDirection, true), 
+        deltas.turn(cDirection, false)
+    ].map((dir) => [input.get(cCell.point.add(dir)), dir])
+    .filter(([neighbor]) => neighbor)
+    .forEach(([neighbor, dir]) => {
+        const newDistance = cCell.distance.get(cDirection, Number.MAX_SAFE_INTEGER) + (dir.eq(cDirection) ? 1 : 1001);
+        
+        if (newDistance < neighbor.distance.get(dir, Number.MAX_SAFE_INTEGER)) {
+            neighbor.distance.set(dir, newDistance);
+            queue.enqueue([neighbor, dir]);
+        }
+    });
 }
-
-const asd = (point) => {
-    return [point, ...point.prev.flatMap(asd)];
-};
-
+ 
 const part1 = () => {
-    return end.distance;
+    return end.distance.values().sort((a, b) => a - b)[0];
 };
 
 const part2 = () => {
-    console.log(queue.queue.filter((v) => v.prev.length > 1));
-    console.log(asd(end).length);
-    return (new Set(asd(end))).size;
+    const bucket = new MSet();
+
+    const backtrack = (tile, distance) => {
+        bucket.add(tile.point);
+        tile.distance.entries()
+            .filter(([, dist]) => dist === distance)
+            .flatMap(([dir]) => input.get(tile.point.remove(dir)))
+            .filter((next) => next)
+            .forEach((next) => 
+                next.distance.entries()
+                    .filter(([, dist]) => dist === distance - 1 || dist === distance - 1001)
+                    .forEach(([, dist]) => {
+                        backtrack(next, dist);
+                    }));
+    };
+
+    backtrack(end, part1());
+
+    return bucket.size();
 };
 
 if (!args[3] || args[3] === '1') {

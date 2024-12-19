@@ -25,9 +25,6 @@ const combo = (operand) => {
 }
 
 const adv = () => {
-    console.log(`program: ${program[pointer]}`);
-    console.log(`combo: ${combo(program[pointer])}`);
-    console.log(`adv: ${regA} / ${2 ** combo(program[pointer])} = ${Math.floor(regA / (2 ** combo(program[pointer])))}`);
     regA = Math.floor(regA / (2 ** combo(program[pointer])));
     pointer++;
 };
@@ -72,7 +69,6 @@ const cdv = () => {
 
 const run = () => {
     while (pointer < program.length) {
-        console.log(pointer, program[pointer], regA, regB, regC);
         const curr = program[pointer];
         pointer++;
         switch (curr) {
@@ -111,7 +107,7 @@ const part1 = () => {
 };
 
 const part2 = () => {
-
+    return 'NOPE!';
 };
 
 if (!args[3] || args[3] === '1') {
