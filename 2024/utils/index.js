@@ -212,6 +212,30 @@ const grids = {
         return distances;
     },
 
+    simplePaths: (grid, start, end, filterNeighbors = (n, c) => true) => {
+        const paths = [];
+        const visited = new Set([start.point.toString()]);
+
+        const dfs = (curr, path) => {
+            if (curr.point.eq(end.point)) {
+                paths.push(path);
+                return;
+            }
+
+            grids.adjacent(grid, curr.point)
+                .filter((n) => !visited.has(n.point.toString()))
+                .filter((n) => filterNeighbors(n, curr))
+                .forEach((n) => {
+                    visited.add(n.point.toString());
+                    dfs(n, path.concat([n]));
+                    visited.delete(n.point.toString());
+                });
+        };
+
+        dfs(start, [start]);
+        return paths;
+    },
+
     column: (input, col) => {
         return input.map((row) => row[col]);
     },
@@ -236,9 +260,9 @@ const grids = {
         };
     },
 
-    print: (grid) => {
+    print: (grid, printVal = (v) => v) => {
         for (const row of grid) {
-            console.log(row.map((v) => v === undefined ? '.' : v).join(''));
+            console.log(row.map((v) => v === undefined ? '.' : printVal(v)).join(''));
         }
     }
 };
