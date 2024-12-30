@@ -22,6 +22,13 @@ const inputs = {
         return require('fs')
             .readFileSync(inputFileName, 'utf-8')
             .match(regex);
+    },
+
+    readParts: (inputFileName, parts = []) => {
+        return require('fs')
+            .readFileSync(inputFileName, 'utf-8')
+            .split('\n\n')
+            .map((x, i) => parts[i](x));
     }
 };
 
@@ -226,18 +233,18 @@ const grids = {
             curr.point.adjacent()
                 .map((n) => tiles.get(n))
                 .filter((n) => n)
-                .filter((n) => !visited.has(n.toString()))
+                .filter((n) => !visited.has(n.point.toString()))
                 .filter((n) => filterNeighbors(n, curr))
                 .forEach((n) => {
-                    const tmp = distances.get(curr) + 1;
-                    if (!distances.has(n) || tmp < distances.get(n)) {
-                        distances.set(n, tmp);
+                    const tmp = distances.get(curr.point) + 1;
+                    if (!distances.has(n.point) || tmp < distances.get(n.point)) {
+                        distances.set(n.point, tmp);
                         queue.push(n);
                     }
                 });
         }
 
-        return distances
+        return distances;
     },
 
     simplePaths: (grid, start, end, filterNeighbors = (n, c) => true) => {
