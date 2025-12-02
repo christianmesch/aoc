@@ -175,10 +175,26 @@ const math = {
         const arr = vals.flat();
         let res = arr[0];
         for (let i = 1; i < arr.length; i++) {
-            res = (arr[i] * res) / math.gcd(arr[i], res); 
+            res = (arr[i] * res) / math.gcd(arr[i], res);
         }
 
         return res;
+    },
+
+    simpleToPrimes: (num) => {
+        const factors = [];
+        let div = 2;
+
+        while (num >= 2) {
+            if (num % div === 0) {
+                factors.push(div);
+                num /= div;
+            } else {
+                div++;
+            }
+        }
+
+        return factors;
     },
 
     parseExpression: (expression) => {
