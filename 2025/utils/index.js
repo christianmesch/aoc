@@ -116,6 +116,10 @@ const lists = {
         return indexes;
     },
 
+    indexOfMax: (arr) => {
+        return arr.reduce((maxI, currV, currI, array) => currV > array[maxI] ? currI : maxI, 0);
+    },
+
     toChunks: (arr, chunkSize = 1) => {
         const res = [];
         for (let i = 0; i < arr.length; i += chunkSize) {
