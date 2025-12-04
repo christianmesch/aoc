@@ -315,6 +315,17 @@ const grids = {
         };
     },
 
+    loopBounds: (bounds) => {
+        const list = [];
+        for (let y = bounds.min[1]; y <= bounds.max[1]; y++) {
+            for (let x = bounds.min[0]; x <= bounds.max[0]; x++) {
+                list.push(new Point([x, y]));
+            }
+        }
+
+        return list;
+    },
+
     print: (grid, printVal = (v) => v) => {
         for (const row of grid) {
             console.log(row.map((v) => v === undefined ? '.' : printVal(v)).join(''));
