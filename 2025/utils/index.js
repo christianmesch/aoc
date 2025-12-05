@@ -43,6 +43,22 @@ const lists = {
         return new Array(Math.ceil((end - start) / delta)).fill(undefined).map((_, i) => start + i * delta);
     },
 
+    mergeRanges: (ranges) => {
+        return ranges.sort(([a], [b]) => a - b)
+            .reduce((acc, [a, b]) => {
+                if (!acc.length) return [[a, b]];
+
+                const last = acc[acc.length - 1];
+                if (a <= last[1]) {
+                    last[1] = Math.max(last[1], b);
+                } else {
+                    acc.push([a, b]);
+                }
+
+                return acc;
+            }, []);
+    },
+
     permutations: (input) => {
         const result = [];
 
