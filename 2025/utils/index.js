@@ -145,6 +145,13 @@ const lists = {
         return res;
     },
 
+    sliceAt: (arr, idx) => {
+        return [
+            arr.slice(0, idx),
+            arr.slice(idx)
+        ];
+    },
+
     compareTo: (a, b) => {
         for (let i = 0; i < a.length; i++) {
             if (a[i] !== b[i]) return a[i] - b[i];
