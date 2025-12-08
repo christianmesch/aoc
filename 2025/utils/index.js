@@ -123,10 +123,10 @@ const lists = {
         return -1;
     },
 
-    findAllIndexes: (arr, value) => {
+    findAllIndexes: (arr, pred = (v, i, arr) => true) => {
         const indexes = [];
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i] === value) indexes.push(i);
+            if (pred(arr[i], i, arr)) indexes.push(i);
         }
 
         return indexes;

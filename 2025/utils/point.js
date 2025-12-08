@@ -101,6 +101,11 @@ class Point {
             .reduce((acc, curr) => acc + curr, 0);
     }
 
+    euclidean(other) {
+        const o = Array.isArray(other) ? new Point(other) : other;
+        return Math.sqrt(this.val.reduce((acc, curr, i) => acc + Math.pow(curr - other.val[i], 2), 0));
+    }
+
     isInBounds(bounds, delta = [0, 0, 0]) {
         const d = Array.isArray(delta) ? delta : delta.val; 
         return this.val.every((v, i) => bounds.min[i] <= v + d[i] && v + d[i] <= bounds.max[i]);
