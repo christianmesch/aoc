@@ -491,6 +491,37 @@ const points = {
         return grid;
     },
 
+    intersectsBounds: (bounds, l1, l2) => {
+        const insideBounds = (point) =>
+            point.every((v, i) => bounds.min[i] < v && v < bounds.max[i]);
+
+        if (insideBounds(l1.val) || insideBounds(l2.val)) return true;
+
+        // Vertical
+        if (l1.x() === l2.x()) {
+            const x = l1.x();
+            if (x <= bounds.min[0] || x >= bounds.max[0]) return false;
+
+            return (
+                (l1.y() <= bounds.min[1] && l2.y() >= bounds.max[1]) ||
+                (l2.y() <= bounds.min[1] && l1.y() >= bounds.max[1])
+            );
+        }
+
+        // Horizontal
+        if (l1.y() === l2.y()) {
+            const y = l1.y();
+            if (y <= bounds.min[1] || y >= bounds.max[1]) return false;
+
+            return (
+                (l1.x() <= bounds.min[0] && l2.x() >= bounds.max[0]) ||
+                (l2.x() <= bounds.min[0] && l1.x() >= bounds.max[0])
+            );
+        }
+
+        return false;
+    },
+
     print: (ps) => {
         grids.print(points.toGrid(ps));
     }
