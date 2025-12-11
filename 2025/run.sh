@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DAYS=( 01 02 03 04 05 06 07 09 10 )
+DAYS=( 01 02 03 04 05 06 07 09 10 11 )
 
 # Wall of shame (VERY slow solutions):
 # 08 ~7s
