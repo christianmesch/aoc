@@ -1,0 +1,14 @@
+{
+  "name": "2025",
+  "version": "1.0.0",
+  "main": "01.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "z3-solver": "^4.15.4"
+  }
+}

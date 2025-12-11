@@ -110,6 +110,17 @@ const lists = {
         return replicateM(k, vals);
     },
 
+    combinations: (vals = []) => {
+        let res = [[]];
+
+        for (const val of vals) {
+            const newCombos = res.map((subset) => [...subset, val]);
+            res = [...res, ...newCombos];
+        }
+
+        return res.sort((a, b) => a.length - b.length);
+    },
+
     cartesian: (a) => a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat()))),
 
     findLastIndex: (arr, pred = (v, i, arr) => true) => {
@@ -223,6 +234,43 @@ const math = {
 
         return factors;
     },
+
+    minimizeSumCoefficients: (X, Y) => {
+        const n = X.length;
+
+        // dp[t] = minimum number of terms to make sum t
+        const dp = new Array(Y + 1).fill(Infinity);
+        const choice = new Array(Y + 1).fill(-1);
+
+        dp[0] = 0; // base case
+
+        // Fill DP table
+        for (let t = 1; t <= Y; t++) {
+            for (let i = 0; i < n; i++) {
+                if (t >= X[i] && dp[t - X[i]] + 1 < dp[t]) {
+                    dp[t] = dp[t - X[i]] + 1;
+                    choice[t] = i; // remember which coin was chosen
+                }
+            }
+        }
+
+        // If unreachable
+        if (dp[Y] === Infinity) {
+            return null; // No solution
+        }
+
+        // Reconstruct solution
+        const N = new Array(n).fill(0);
+        let t = Y;
+        while (t > 0) {
+            const i = choice[t];
+            N[i]++;
+            t -= X[i];
+        }
+
+        return N;
+    },
+
 
     parseExpression: (expression) => {
         return Function(`'use strict'; return (${expression})`)();
